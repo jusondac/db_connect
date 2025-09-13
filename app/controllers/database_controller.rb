@@ -1,4 +1,6 @@
 class DatabaseController < ApplicationController
+  SESSION_DATA_KEYS = [ :database_name, :host, :port, :user, :tables, :selected_table, :columns, :data ].freeze
+
   def connect
     if request.post?
       # Clear previous session data for fresh connection
@@ -32,25 +34,20 @@ class DatabaseController < ApplicationController
   private
 
   def clear_session_data
-    session.delete(:database_name)
-    session.delete(:host)
-    session.delete(:port)
-    session.delete(:user)
-    session.delete(:tables)
-    session.delete(:selected_table)
-    session.delete(:columns)
-    session.delete(:data)
+    session.delete(*SESSION_DATA_KEYS)
   end
 
   def store_connection_data(service)
-    session[:database_name] = service.connection_info[:database_name]
-    session[:host] = service.connection_info[:host]
-    session[:port] = service.connection_info[:port]
-    session[:user] = service.connection_info[:user]
-    session[:tables] = service.tables
-    session[:selected_table] = service.selected_table
-    session[:columns] = service.columns
-    session[:data] = service.data
+    session.merge!(
+      database_name: service.connection_info[:database_name],
+      host: service.connection_info[:host],
+      port: service.connection_info[:port],
+      user: service.connection_info[:user],
+      tables: service.tables,
+      selected_table: service.selected_table,
+      columns: service.columns,
+      data: service.data
+    )
   end
 
   def load_session_data

@@ -1,0 +1,13 @@
+<div id="<%= dom_id role %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= role.name %>
+  </div>
+  <% role_class = eval(role.name.capitalize) rescue nil %>
+  <% if role_class %>
+    <div>
+      <strong class="block font-medium mb-1">Dynamic Class:</strong>
+      <p>Class Name: <%= role_class.name %></p>
+    </div>
+  <% end %>
+</div>

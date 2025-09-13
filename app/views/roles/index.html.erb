@@ -1,0 +1,32 @@
+<% content_for :title, "Roles" %>
+<div class="max-w-6xl mx-auto">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">Roles</h1>
+    <%= link_to "New Role", new_role_path, class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-medium" %>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% if @roles.any? %>
+      <% @roles.each do |role| %>
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= role.name %></h2>
+          <div class="mb-4">
+            <% role_class = eval(role.name.capitalize) rescue nil %>
+            <% if role_class %>
+              <span class="inline-block bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded">Class: <%= role_class.name %></span>
+            <% else %>
+              <span class="inline-block bg-gray-100 text-gray-600 text-sm px-2 py-1 rounded">Class: N/A</span>
+            <% end %>
+          </div>
+          <div class="flex justify-between items-center">
+            <%= link_to "View", role_path(role), class: "text-blue-500 hover:text-blue-700 font-medium" %>
+            <%= button_to "Delete", role, method: :delete, class: "text-red-500 hover:text-red-700 font-medium", data: { turbo_confirm: "Are you sure?" }, form_class: "inline" %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-span-full text-center py-12">
+        <p class="text-gray-500 text-lg">No roles found.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

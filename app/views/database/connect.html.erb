@@ -87,39 +87,4 @@
     </div>
   </div>
 <% end %>
-<% if @columns %>
-  <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Columns for <%= @selected_table %></h2>
-    <div class="flex flex-wrap gap-2">
-      <% @columns.each do |column| %>
-        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded text-sm"><%= column %></span>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-<% if @data %>
-  <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Data from <%= @selected_table %></h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full border-collapse border border-gray-300">
-        <thead class="bg-gray-50">
-          <tr>
-            <% @columns.each do |column| %>
-              <th class="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700"><%= column %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody class="bg-white">
-          <% @data.each do |row| %>
-            <tr class="hover:bg-gray-50">
-              <% @columns.each do |column| %>
-                <td class="border border-gray-300 px-4 py-2 text-sm text-gray-900"><%= row[column] %></td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<% end %>
 </div>

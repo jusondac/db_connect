@@ -1,0 +1,119 @@
+<div class="max-w-6xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-16 px-4">
+    <h1 class="text-5xl font-bold text-gray-900 mb-6">
+      Database Connection Manager
+    </h1>
+    <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+      Connect to your PostgreSQL databases with ease. View tables, explore data, and manage your database connections all in one place.
+    </p>
+    <div class="flex justify-center gap-4">
+      <%= link_to "Connect to Database", database_connect_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition duration-200" %>
+    </div>
+  </div>
+  <!-- Features Section -->
+  <div class="py-16 px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Features</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Everything you need to work with your PostgreSQL databases
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Easy Connection</h3>
+        <p class="text-gray-600">
+          Connect to any PostgreSQL database with a simple form. Automatic URL generation and connection validation.
+        </p>
+      </div>
+      <!-- Feature 2 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Table Explorer</h3>
+        <p class="text-gray-600">
+          Browse all tables in your database. View column information and sample data from each table.
+        </p>
+      </div>
+      <!-- Feature 3 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Secure Access</h3>
+        <p class="text-gray-600">
+          Secure database connections with proper authentication. Your credentials are never stored permanently.
+        </p>
+      </div>
+      <!-- Feature 4 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Real-time Updates</h3>
+        <p class="text-gray-600">
+          See connection status and data updates in real-time. Automatic URL generation as you type.
+        </p>
+      </div>
+      <!-- Feature 5 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">User Friendly</h3>
+        <p class="text-gray-600">
+          Clean, intuitive interface with helpful error messages and clear navigation.
+        </p>
+      </div>
+      <!-- Feature 6 -->
+      <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Modern Interface</h3>
+        <p class="text-gray-600">
+          Built with modern web technologies for a responsive and smooth user experience.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- Quick Start Section -->
+  <div class="bg-gray-50 py-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Get Started</h2>
+      <div class="bg-white rounded-lg shadow-md p-8 border border-gray-200">
+        <div class="text-left">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Quick Connection Guide</h3>
+          <ol class="list-decimal list-inside space-y-2 text-gray-700">
+            <li>Click "Connect to Database" above</li>
+            <li>Enter your PostgreSQL connection details (host, port, database name, username, password)</li>
+            <li>The JDBC URL will be automatically generated as you type</li>
+            <li>Click "Connect" to establish the connection</li>
+            <li>View your tables, columns, and sample data</li>
+          </ol>
+        </div>
+        <div class="mt-6">
+          <%= link_to "Start Connecting", database_connect_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-200" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

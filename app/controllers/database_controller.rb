@@ -19,11 +19,15 @@ class DatabaseController < ApplicationController
         # Establish connection
         ActiveRecord::Base.establish_connection(config)
 
+        @database_name = database_name
+        @host = host
+
         # Get tables
         @tables = ActiveRecord::Base.connection.tables
 
         if @tables.any?
           @selected_table = @tables.first
+          @table_name = @selected_table
           @columns = ActiveRecord::Base.connection.columns(@selected_table).map(&:name)
           # Get some data
           result = ActiveRecord::Base.connection.execute("SELECT * FROM #{@selected_table} LIMIT 10")

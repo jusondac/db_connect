@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
-    <%= form_with url: database_connect_path, method: :post, data: { controller: "database-connect" } do |form| %>
+    <%= form_with url: database_connect_path, method: :post, scope: :connection, data: { controller: "database-connect" } do |form| %>
       <%= form.hidden_field :url, data: { "database-connect-target": "urlHidden" } %>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
@@ -66,25 +66,57 @@
             <span class="text-gray-900"><%= @user %></span>
           </div>
         <% end %>
-        <% if @table_name %>
+        <% if @selected_table %>
           <div>
             <span class="font-medium text-gray-700">Selected Table:</span>
-            <span class="text-gray-900"><%= @table_name %></span>
+            <span class="text-gray-900"><%= @selected_table %></span>
           </div>
         <% end %>
       </div>
     </div>
   <% end %>
-<% if @tables %>
-  <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Tables</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <% @tables.each do |table| %>
-        <div class="bg-gray-50 border border-gray-200 rounded p-4">
-          <p class="text-gray-800 font-medium"><%= table %></p>
+  <% if @tables %>
+    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Tables</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% @tables.each do |table| %>
+          <div class="bg-gray-50 border border-gray-200 rounded p-4">
+            <%= form_with url: database_select_table_path, method: :post do |f| %>
+              <%= f.hidden_field :table, value: table %>
+              <%= f.submit table, class: "w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-medium" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% if @selected_table %>
+    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Data from <%= @selected_table %></h2>
+      <% if @data && @data.any? %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+              <tr>
+                <% @columns.each do |col| %>
+                  <th class="px-4 py-2 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= col %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @data.each do |row| %>
+                <tr>
+                  <% @columns.each do |col| %>
+                    <td class="px-4 py-2 border-b border-gray-200 text-sm text-gray-900"><%= row[col] %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
+      <% else %>
+        <p class="text-gray-600">No data available.</p>
       <% end %>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>

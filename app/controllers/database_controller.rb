@@ -1,24 +1,17 @@
 class DatabaseController < ApplicationController
-  SESSION_DATA_KEYS = [ :database_name, :host, :port, :user, :tables, :selected_table, :columns, :data ].freeze
+  CONNECTION_FIELDS = [ :host, :port, :database_name, :user, :password ].freeze
 
   def connect
     if request.post?
-      # Clear previous session data for fresh connection
-      clear_session_data
-
-      # Create service and attempt connection
       service = DatabaseConnectionService.new
-      success = service.connect(
-        host: params[:host],
-        port: params[:port],
-        database_name: params[:database_name],
-        user: params[:user],
-        password: params[:password]
-      )
+      connection_params = CONNECTION_FIELDS.each_with_object({}) do |field, hash|
+        hash[field] = params[:connection][field]
+      end
 
+      success = service.connect(**connection_params)
       if success
-        # Store successful connection data in session
-        store_connection_data(service)
+        save_connection_to_session(connection_params)
+        session[:tables] = service.tables
         flash[:notice] = service.success_message
       else
         flash[:alert] = service.error_message
@@ -26,35 +19,66 @@ class DatabaseController < ApplicationController
 
       redirect_to database_connect_path
     else
-      # GET request - load from session
-      load_session_data
+      db_config = connection_config_from_session
+      if db_config
+        @host = db_config[:host]
+        @port = db_config[:port]
+        @database_name = db_config[:database]
+        @user = db_config[:username]
+      end
+      @tables = session[:tables]
+      @selected_table = session[:selected_table]
+
+      @tables.each do |table|
+        class_name = table.singularize.camelize
+        Object.send(:remove_const, class_name) if Object.const_defined?(class_name)
+        Object.const_set(class_name, Class.new(ActiveRecord::Base) do
+          self.table_name = table
+        end)
+      end if @tables.present?
+
+      if @selected_table && establish_connection_from_session
+        @columns = ActiveRecord::Base.connection.columns(@selected_table).map(&:name)
+        result = ActiveRecord::Base.connection.execute("SELECT * FROM #{ActiveRecord::Base.connection.quote_table_name(@selected_table)} LIMIT 10")
+        @data = result.to_a
+      end
     end
+  end
+
+  def select_table
+    table = params[:table]
+    if session[:tables]&.include?(table)
+      if establish_connection_from_session
+        session[:selected_table] = table
+        flash[:notice] = "Selected table: #{table}"
+      else
+        flash[:alert] = "Failed to establish database connection"
+      end
+    else
+      flash[:alert] = "Invalid table: #{table}"
+    end
+    redirect_to database_connect_path
   end
 
   private
 
-  def clear_session_data
-    session.delete(*SESSION_DATA_KEYS)
+  def save_connection_to_session(connection_params)
+    session[:db_config] = CONNECTION_FIELDS.each_with_object({ adapter: "postgresql" }) do |field, hash|
+      hash[field] = connection_params[field]
+    end
   end
 
-  def store_connection_data(service)
-    session.merge!(
-      database_name: service.connection_info[:database_name],
-      host: service.connection_info[:host],
-      port: service.connection_info[:port],
-      user: service.connection_info[:user],
-      tables: service.tables,
-      selected_table: service.selected_table,
-      columns: service.columns,
-      data: service.data
-    )
+  def establish_connection_from_session
+    return false unless session[:db_config]
+
+    ActiveRecord::Base.establish_connection(session[:db_config])
+    true
+  rescue StandardError => e
+    Rails.logger.error("Failed to establish connection from session: #{e.message}")
+    false
   end
 
-  def load_session_data
-    @database_name = session[:database_name]
-    @host = session[:host]
-    @port = session[:port]
-    @user = session[:user]
-    @tables = session[:tables]
+  def connection_config_from_session
+    session[:db_config]
   end
 end

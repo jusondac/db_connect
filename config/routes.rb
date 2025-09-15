@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "home/index"
   get "database/connect"
   post "database/connect"
+  post "database/select_table"
   root to: "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

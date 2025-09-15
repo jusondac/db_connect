@@ -64,3 +64,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "byebug", "~> 12.0"
+gem "awesome_print", "~> 1.9"
